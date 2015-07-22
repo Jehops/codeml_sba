@@ -1,4 +1,4 @@
-# `codeml with Smoothed Bootstrap Aggregation (SBA)`
+#`codeml with Smoothed Bootstrap Aggregation (SBA)`
 
 SBA is a method that uses bootstrapping of site patterns and borrows kernel
 smoothing techniques from machine learning to account for errors in maximum
