@@ -30,4 +30,5 @@ Inferences should be based on the average posterior probabilities for a site,
 i.e., inference for site ```i```, should be based on the average of column ```i```.
 
 [1] Yang, Ziheng. "PAML 4: phylogenetic analysis by maximum likelihood." Molecular biology and evolution 24.8 (2007): 1586-1591.
+
 [2] The value of omega for the positive selection category is added on to the end of each row.
