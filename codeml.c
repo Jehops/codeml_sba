@@ -746,6 +746,16 @@ com.fpatt[i] /= (double)com.ls;
 		  for (i=0; i<np; i++) printf("%lf ", x[i]);
 		  printf("\nAfter:           ");
 	      }
+
+	      /* get the likelihoood and posteriors for the unsmoothed parameters first */
+	      lnL = com.plfun(x,np);
+	      if(noisy) {
+		  printf("\nBefore smoothing: ");
+		  printf("\nnp =%6d", np);
+		  printf("\nlnL0 = %12.6f\n",-lnL);
+	      }
+	      lfunNSsites_rate(frst,x,np);
+	      
 	      k=0;
 	      for (i=0; i<np; i++) {
 		  sscanf(line+k, "%lf%n", &x[i],&j);
@@ -753,7 +763,7 @@ com.fpatt[i] /= (double)com.ls;
 		  if (noisy) printf("%lf ", x[i]);
 	      }
 
-	      // smooth the p parameters
+	      /* smooth the p parameters */
 	      if (com.NSsites == NSpselection) {
 		  for(i=0; i<MAXSF; i++) {
 		      if ( runif[1][i] <= 1 - runif[0][i]
