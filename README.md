@@ -28,11 +28,11 @@ also be present in the control file.
 Below are the relevant parameters for SBA in the control file.
 
        seqfile   = input.seq * steps 1 and 3
-       seqfile   = boot.txt  * contains boostrap alignemnts (step 2 only)
-       ndata     = 2         * step 2 only
-       bootstrap = 2         * step 1, generate N boostrap sequence alignments
+       seqfile   = boot.txt  * step 2, contains boostrap sequence alignemnts
+       ndata     = N         * step 2, estimate parameters for each of N boostrap alignments
+       bootstrap = N         * step 1, generate N boostrap sequence alignments
        sba       = 1         * step 2, estimate parameters for bootstrap alignments
-       sba       = 2         * step 3, smoothing and calculated posterior probabilities
+       sba       = 2         * step 3, smooth and calculated posterior probabilities
        h         = 0.4       * step 3, smoothing bandwidth parameter (0 <= h <= 1)
 
 The output file ```sba_ps.csv``` will be created.  Each row of this file
