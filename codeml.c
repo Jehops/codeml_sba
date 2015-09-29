@@ -205,7 +205,7 @@ double AAchem[][20+1]={  /* last element is the max */
 };   /* in the order p, v, c, a */
 
 
-FILE *fout, *frub, *flnf, *frst, *frst1, *frst2=NULL, *finitials, *fsba, *fsba2;
+FILE *fout, *frub, *flnf, *frst, *frst1, *frst2=NULL, *finitials, *fsba, *fsba2, *fsba3;
 char *ratef="rates";
 enum {Fequal, F1x4, F3x4, Fcodon, F1x4MG, F3x4MG, FMutSel0, FMutSel} CodonFreqs;
 char *codonfreqs[]={"Fequal", "F1x4", "F3x4", "Fcodon", "F1x4MG", "F3x4MG", "FMutSel0", "FMutSel"};
@@ -314,7 +314,8 @@ scanf("%d", &KGaussLegendreRule);
    if (com.sba == 1) fsba=gfopen("sba.params","w");
    if (com.sba == 2) { 
        fsba=gfopen("sba.params","r");
-       fsba2=gfopen("sba_ps.csv","w"); 
+       fsba2=gfopen("sba_ps.csv","w");
+       fsba3=gfopen("sba_smoothed.params","w"); 
        for(i=0; i<MAXSF; i++) runif[0][i] = rndu();
        if (com.NSsites == NSpselection)
 	   for(i=0; i<MAXSF; i++) runif[1][i] = rndu();
@@ -882,7 +883,7 @@ com.fpatt[i] /= (double)com.ls;
 
       for(i=0; i<np; i++) {
 	  fprintf(fout," %8.6f",x[i]);
-	  if (com.sba == 1) fprintf(fsba,"%8.6f ",x[i]);
+	  if (com.sba == 1) fprintf(fsba,"%10.6f ",x[i]);
       }
       FPN(fout); fflush(fout);
       if (com.sba == 1) fprintf(fsba,"\n");
