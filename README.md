@@ -38,7 +38,7 @@ Below are the relevant parameters for SBA in the control file.
 
        * step 3
        seqfile   = input.seq * contains sequence alignment
-       sba       = 2         * smooth and calculated posterior probabilities
+       sba       = 2         * smooth and calculate posterior probabilities
        h         = 0.4       * smoothing bandwidth parameter (0 <= h <= 1)
 
 The output file ```sba_ps.csv``` will be created.  Each row of this file
