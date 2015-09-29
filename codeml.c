@@ -619,7 +619,7 @@ fprintf(frst1, " false positive: %6d\n", npositive);
    if(com.ndata>1 && fseq) fclose(fseq);  
    fclose(fout);  fclose(frub);
    if(com.sba) fclose(fsba);
-   if(com.sba == 2) fclose(fsba2);
+   if(com.sba == 2) { fclose(fsba2); fclose(fsba3); }
    if(finitials)  fclose(finitials);
    FreeMemPUVR();
    free(com.pose);
@@ -736,6 +736,7 @@ com.fpatt[i] /= (double)com.ls;
       if( com.sba == 2) {
 	  int pidx = com.ntime+com.nkappa;
 	  float h = com.h;
+	  int sp_flag = 0; // flag set when smoothed parameters are valid
 	  
 	  while ( fgets(line, sizeof(line), fsba) ) {
 
@@ -743,9 +744,17 @@ com.fpatt[i] /= (double)com.ls;
 	      if (noisy) {
 		  printf("\n\n ** Fixing parameters for sba **\n");
 		  printf("Before:          ");
-		  for (i=0; i<np; i++) printf("%lf ", x[i]);
+		  for (i=0; i<np; i++) printf("%10.6f ", x[i]);
 		  printf("\nAfter:           ");
 	      }
+
+	      k=0;
+	      for (i=0; i<np; i++) {
+		  sscanf(line+k, "%lf%n", &x[i],&j);
+		  k+=j;
+		  if (noisy) printf("%10.6f ", x[i]);
+	      }
+	      if (noisy) printf("\n\n");
 
 	      /* get the likelihoood and posteriors for the unsmoothed parameters first */
 	      lnL = com.plfun(x,np);
@@ -756,16 +765,9 @@ com.fpatt[i] /= (double)com.ls;
 	      }
 	      lfunNSsites_rate(frst,x,np);
 	      
-	      k=0;
-	      for (i=0; i<np; i++) {
-		  sscanf(line+k, "%lf%n", &x[i],&j);
-		  k+=j;
-		  if (noisy) printf("%lf ", x[i]);
-	      }
-
 	      /* smooth the p parameters */
-	      if (com.NSsites == NSpselection) {
-		  for(i=0; i<MAXSF; i++) {
+	      for(i=0; i<MAXSF; i++) {
+		  if (com.NSsites == NSpselection) {
 		      if ( runif[1][i] <= 1 - runif[0][i]
 			      && runif[0][i] >= (x[pidx] - h > 0 ? x[pidx] - h : 0)
 			      && runif[0][i] <= (x[pidx] + h < 1 ? x[pidx] + h : 1)
@@ -773,36 +775,42 @@ com.fpatt[i] /= (double)com.ls;
 			      && runif[1][i] <= (x[pidx+1] + h < 1 ? x[pidx+1] + h : 1) ) {
 			  x[pidx] = runif[0][i];
 			  x[pidx+1] = runif[1][i];
+			  sp_flag = 1;
 		      }
 		  }
-	      }
-	      else if (com.NSsites == NSbetaw) {
-		  for(i=0; i<MAXSF; i++) {
+		  else if (com.NSsites == NSbetaw) {
 		      if ( runif[0][i] >= (x[pidx] - h > 0 ? x[pidx] - h : 0)
 			      && runif[0][i] <= (x[pidx] + h < 1 ? x[pidx] + h : 1) ) {
 			  x[pidx] = runif[0][i];
+			  sp_flag = 1;
 		      }
+		  }
+
+		  if (sp_flag) {
+		      if (noisy) {
+			  printf("\nAfter Smoothing: ");
+			  for (j=0; j<np; j++) printf("%10.6f ",x[j]);
+			  printf("\n");
+		      }
+		      for (j=0; j<np; j++) fprintf(fsba3,"%10.6f ",x[j]);
+		      fprintf(fsba3,"\n");
+
+		      lnL = com.plfun(x,np);
+		      if(noisy) {
+			  printf("\nnp =%6d", np);
+			  printf("\nlnL0 = %12.6f\n",-lnL);
+		      }
+		      lfunNSsites_rate(frst,x,np);
+
+		      sp_flag = 0;
 		  }
 	      }
 
-	      if (noisy) {
-		  printf("\nAfter Smoothing: ");
-		  for (i=0; i<np; i++) printf("%lf ", x[i]);
-		  printf("\n");
-	      }
+	      fclose(ftree); 
+	      fclose(flnf);
 
-	      lnL = com.plfun(x,np);
-	      if(noisy) {
-		  printf("\nnp =%6d", np);
-		  printf("\nlnL0 = %12.6f\n",-lnL);
-	      }
-	      lfunNSsites_rate(frst,x,np);
+	      return(0);
 	  }
-
-	  fclose(ftree); 
-	  fclose(flnf);
-
-	  return(0);
       }
       /* jrm sba == 2 */
       
