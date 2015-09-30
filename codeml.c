@@ -205,7 +205,8 @@ double AAchem[][20+1]={  /* last element is the max */
 };   /* in the order p, v, c, a */
 
 
-FILE *fout, *frub, *flnf, *frst, *frst1, *frst2=NULL, *finitials, *fsba, *fsba2, *fsba3;
+FILE *fout, *frub, *flnf, *frst, *frst1, *frst2=NULL, *finitials;
+FILE *fsba, *fsba2, *fsba3, *fsba4;
 char *ratef="rates";
 enum {Fequal, F1x4, F3x4, Fcodon, F1x4MG, F3x4MG, FMutSel0, FMutSel} CodonFreqs;
 char *codonfreqs[]={"Fequal", "F1x4", "F3x4", "Fcodon", "F1x4MG", "F3x4MG", "FMutSel0", "FMutSel"};
@@ -314,7 +315,13 @@ scanf("%d", &KGaussLegendreRule);
    if (com.sba == 1) fsba=gfopen("sba.params","w");
    if (com.sba == 2) {
        fsba=gfopen("sba.params","r");
-       fsba2=gfopen("sba_ps.csv","w");
+       if (com.model == 2) {
+	   fsba2=gfopen("sba_all_lineages_ps.csv","w");
+	   fsba4=gfopen("sba_foreground_branches_ps.csv","w");
+       }
+       else {
+	   fsba2=gfopen("sba_ps.csv","w");
+       }
        fsba3=gfopen("sba_smoothed.params","w");
        for(i=0; i<MAXSF; i++) runif[0][i] = rndu();
        if (com.NSsites == NSpselection)
@@ -646,7 +653,7 @@ int Forestry (FILE *fout)
    FILE *fM0tree;
 #endif
 
-   char line[255];
+   char line[1024];
 
    if ((ftree=fopen(com.treef,"r"))==NULL) {
       printf("\ntree file %s not found.\n", com.treef);
@@ -758,13 +765,13 @@ com.fpatt[i] /= (double)com.ls;
 	      if (noisy) printf("\n\n");
 
 	      /* get the likelihoood and posteriors for the unsmoothed parameters first */
-	      lnL = com.plfun(x,np);
-	      if(noisy) {
-		  printf("\nBefore smoothing: ");
-		  printf("\nnp =%6d", np);
-		  printf("\nlnL0 = %12.6f\n",-lnL);
-	      }
-	      lfunNSsites_rate(frst,x,np);
+	      /* lnL = com.plfun(x,np); */
+	      /* if(noisy) { */
+	      /* 	  printf("\nBefore smoothing: "); */
+	      /* 	  printf("\nnp =%6d", np); */
+	      /* 	  printf("\nlnL0 = %12.6f\n",-lnL); */
+	      /* } */
+	      /* lfunNSsites_rate(frst,x,np); */
 
 	      /* smooth the p parameters */
 	      for(i=0; i<MAXSF; i++) {
@@ -5356,13 +5363,13 @@ int PrintProbNSsites (FILE* frst, double prob[], double meanw[], double varw[], 
 
 int lfunNSsites_rate (FILE* frst, double x[], int np)
 {
-/* This calculates the dN/dS rates for sites under models with variabel dN/dS
+/* This calculates the dN/dS rates for sites under models with variable dN/dS
    ratios among sites (Nielsen and Yang 1998).  Modified from lfundG()
    com.fhK[] holds the posterior probabilities.
 */
    int  h,hp, ir, it=0, refsp=0, k=com.ntime+com.nrgene+com.nkappa;
    double lnL=0, fh;
-   double w2=x[com.np-1],psel=0, *meanw, maxmw, minmw, wpos=1.1, cutoff=0.5;
+   double w2=x[com.np-1],psel=0, psel2=0, *meanw, maxmw, minmw, wpos=1.1, cutoff=0.5;
    char  *sig, aa;
 
    FILE *fsites, *fras;
@@ -5438,6 +5445,25 @@ int lfunNSsites_rate (FILE* frst, double x[], int np)
             }
          }
       }
+      /* jrm print the p.p this site is under positive selection */
+      /* com.rK holds the omega, com.fhK holds log{f(x|r} or f(x|r) when scaling
+       * is off
+       */
+      for(h=0; h<lst; h++) {
+	  hp=(!com.readpattern ? com.pose[h] : h);
+	  psel = com.fhK[2*com.npatt+hp]+com.fhK[3*com.npatt+hp]; // foreground branches
+	  psel2 = 0; // all lineages
+	  if(com.rK[0]>wpos) psel2 =  com.fhK[0*com.npatt+hp];
+	  if(com.rK[1]>wpos) psel2 += com.fhK[1*com.npatt+hp];	  
+	  fprintf(fsba2, "%10.6f", psel2);
+	  if ( h < lst-1 ) fprintf(fsba2, ",");
+	  else             fprintf(fsba2, "\n");
+	  fprintf(fsba4, "%10.6f", psel);
+	  if ( h < lst-1 ) fprintf(fsba4, ",");
+	  else             fprintf(fsba4, "\n");
+      }
+      /***********************************************************/
+
    }
    fprintf (frst,"\n\nlnL = %12.6f\n", -lnL);
 
