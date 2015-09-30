@@ -25,7 +25,8 @@ bandwidth parameter.  Specify this value with ```h = x``` in the control file,
 where ```x``` is a values between 0 and 1.  For this final stage, ```sba = 2```
 must also be present in the control file.
 
-Below are the relevant parameters for SBA in the control file.
+Below are the relevant parameters for SBA in the control file.  Only active the
+SBA parameters in the current step and comment those in the other steps.
 
        * step 0
        seqfile   = input.seq * contains sequence alignment
