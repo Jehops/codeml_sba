@@ -3,7 +3,7 @@
 SBA is a method that uses bootstrapping of site patterns and borrows kernel
 smoothing techniques from machine learning to account for errors in maximum
 likelihood parameter estimates in codeml [1].  It is currently working with
-codon models M2a and M8.
+codon models M2a, branch-site model A, and M8.
 
 To use the method, codeml must be run three times.
 
