@@ -3,7 +3,7 @@
 SBA is a method that uses bootstrapping of site patterns and borrows kernel
 smoothing techniques from machine learning to account for errors in maximum
 likelihood parameter estimates in codeml [1].  It is currently working with
-codon models M2a, branch-site model A, and M8.
+codon models M2a, branch-site A, and M8.
 
 To use the method, codeml must be run three times.
 
@@ -13,9 +13,9 @@ where ```N``` is the number of bootstrap samples to generate.
 
 Next, parameters must be estimated for each of the bootstrap samples.  To do
 this, run codeml with ```sba = 1``` and ```ndata = N``` in the control file.
-The ````seqfile```` entry in the control file must be set to file containing the
-boostrap sequence alignments, which, by default is boot.txt.  Don't forget to
-comment out the ```bootstrap = N``` line that was set in the previous step.
+The ````seqfile```` entry in the control file must be set to a file containing
+the boostrap sequence alignments, which, by default is ```boot.txt```.  Don't forget
+to comment out the ```bootstrap = N``` line that was set in the previous step.
 
 Finally, the p-parameters of the omega distribution must be smoothed and
 posterior probabilities for each set of parameters must be calculated using the
