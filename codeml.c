@@ -5449,18 +5449,20 @@ int lfunNSsites_rate (FILE* frst, double x[], int np)
       /* com.rK holds the omega, com.fhK holds log{f(x|r} or f(x|r) when scaling
        * is off
        */
-      for(h=0; h<lst; h++) {
-	  hp=(!com.readpattern ? com.pose[h] : h);
-	  psel = com.fhK[2*com.npatt+hp]+com.fhK[3*com.npatt+hp]; // foreground branches
-	  psel2 = 0; // all lineages
-	  if(com.rK[0]>wpos) psel2 =  com.fhK[0*com.npatt+hp];
-	  if(com.rK[1]>wpos) psel2 += com.fhK[1*com.npatt+hp];	  
-	  fprintf(fsba2, "%10.6f", psel2);
-	  if ( h < lst-1 ) fprintf(fsba2, ",");
-	  else             fprintf(fsba2, "\n");
-	  fprintf(fsba4, "%10.6f", psel);
-	  if ( h < lst-1 ) fprintf(fsba4, ",");
-	  else             fprintf(fsba4, "\n");
+      if (com.sba == 2) {
+	  for(h=0; h<lst; h++) {
+	      hp=(!com.readpattern ? com.pose[h] : h);
+	      psel = com.fhK[2*com.npatt+hp]+com.fhK[3*com.npatt+hp]; // foreground branches
+	      psel2 = 0; // all lineages
+	      if(com.rK[0]>wpos) psel2 =  com.fhK[0*com.npatt+hp];
+	      if(com.rK[1]>wpos) psel2 += com.fhK[1*com.npatt+hp];
+	      fprintf(fsba2, "%10.6f", psel2);
+	      if ( h < lst-1 ) fprintf(fsba2, ",");
+	      else             fprintf(fsba2, "\n");
+	      fprintf(fsba4, "%10.6f", psel);
+	      if ( h < lst-1 ) fprintf(fsba4, ",");
+	      else             fprintf(fsba4, "\n");
+	  }
       }
       /***********************************************************/
 
