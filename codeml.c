@@ -816,9 +816,8 @@ com.fpatt[i] /= (double)com.ls;
 
 	      fclose(ftree);
 	      fclose(flnf);
-
-	      return(0);
 	  }
+	  return(0);
       }
       /* jrm sba == 2 */
 
