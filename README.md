@@ -39,22 +39,22 @@ between 0 and 1.  For this final stage, ```sba = 2``` must also be
 present in the control file.
 
 Below are the relevant parameters for SBA in the control file.  Only
-active the SBA parameters in the current step and comment those in the
+activate the SBA parameters in the current step and comment those in the
 other steps.
 
-* step 0
-seqfile   = input.seq * contains sequence alignment
-bootstrap = N         * generate N boostrap sequence alignments
+      * step 0
+      seqfile   = input.seq * contains sequence alignment
+      bootstrap = N         * generate N boostrap sequence alignments
 
-* step 1
-seqfile   = boot.txt  * contains boostrap sequence alignemnts
-ndata     = N         * parameters for each of N boostrap alignments
-sba       = 1         * parameters for bootstrap alignments
+      * step 1
+      seqfile   = boot.txt  * contains boostrap sequence alignemnts
+      ndata     = N         * parameters for each of N boostrap alignments
+      sba       = 1         * parameters for bootstrap alignments
 
-* step 2
-seqfile   = input.seq * contains sequence alignment
-sba       = 2         * smooth and calculate posterior probabilities
-h         = 0.4       * smoothing bandwidth parameter (0 <= h <= 1)
+      * step 2
+      seqfile   = input.seq * contains sequence alignment
+      sba       = 2         * smooth and calculate posterior probabilities
+      h         = 0.4       * smoothing bandwidth parameter (0 <= h <= 1)
 
 The output file ```sba_ps.csv``` will be created.  Each row of this
 file contains the site posterior probabilities for positive selection
