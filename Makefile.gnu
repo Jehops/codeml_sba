@@ -1,18 +1,18 @@
-PRGS = codemlb
+PRGS = codeml_sba
 CC = cc
 LIBS = -lm # -lM (link to the math library)
 
 ifeq ($(MAKECMDGOALS), debug)
-   CFLAGS = -ggdb
+CFLAGS = -ggdb
 else
-   CFLAGS = -O3
+CFLAGS = -O3
 endif
 
 all: $(PRGS)
 
 debug: $(PRGS)
 
-codemlb: codeml.o tools.o
+codeml_sba: codeml.o tools.o
 	$(CC) $(CFLAGS) -o $@ codeml.o tools.o $(LIBS)
 
 tools.o: paml.h tools.c

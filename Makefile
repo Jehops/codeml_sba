@@ -1,7 +1,7 @@
-## This is a BSD make file.  If you're running GNU/Linux, you should use the GNU
-## Makefile: make -f Makefile.gnu.
+## This is a BSD make file.  If you're running GNU/Linux or OS X, you
+## should use the GNU Makefile: make -f Makefile.gnu.
 
-PRGS = codeml
+PRGS = codeml_sba
 CC = cc
 LIBS = -lm # -lM (link to the math library)
 
@@ -19,7 +19,7 @@ check-syntax: $(PRGS)
 
 debug: $(PRGS)
 
-codeml: codeml.o tools.o
+codeml_sba: codeml.o tools.o
 	$(CC) $(CFLAGS) -o $@ codeml.o tools.o $(LIBS)
 
 tools.o: paml.h tools.c
