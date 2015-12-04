@@ -56,13 +56,16 @@ other steps.
       sba       = 2         * smooth and calculate posterior probabilities
       h         = 0.4       * smoothing bandwidth parameter (0 <= h <= 1)
 
-The output file ```sba_ps.csv``` will be created.  Each row of this
-file contains the site posterior probabilities for positive selection
-associated with one set of model parameters [2].  Column ```i``` of
-the file contains the posterior probabilities for site ```i``` over
-all sets of model parameters.  Inferences should be based on the
-average posterior probabilities for a site, i.e., inference for site
-```i```, should be based on the average of column ```i```.
+The output file ```sba_ps.csv``` will be created (or
+```sba_foreground_branches_ps.csv``` if you are running a branch-site
+model) .  Each row of this file contains the site posterior
+probabilities for positive selection associated with one set of model
+parameters [2].  Column ```i``` of the file contains the posterior
+probabilities for site ```i``` over all sets of model parameters.
+Inferences should be based on the average posterior probabilitie for a
+site, i.e., inference for site ```i```, should be based on the average
+of column ```i```.  In column ```i+1``` the associated ω estimate is
+printed.
 
 [1] Yang, Ziheng. "PAML 4: phylogenetic analysis by maximum
 likelihood." Molecular biology and evolution 24.8 (2007): 1586-1591.
