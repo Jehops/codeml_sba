@@ -5291,7 +5291,7 @@ int PrintProbNSsites (FILE* frst, double prob[], double meanw[], double varw[], 
 	     if(psel) fprintf(fsba2, "%5.5f", psel);
 	     else     fprintf(fsba2, "0.00000");
 	     if(h<lst-1) fprintf(fsba2, ",");
-	     else        fprintf(fsba2, "%6.3f\n", com.rK[ncat-1]);
+	     else        fprintf(fsba2, ",%6.3f\n", com.rK[ncat-1]);
 	 }
 	 /******/
          if(BayesEB==1 && com.model==0)
