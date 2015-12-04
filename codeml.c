@@ -743,6 +743,7 @@ com.fpatt[i] /= (double)com.ls;
       /* jrm sba == 2*/
       if( com.sba == 2) {
 	  int pidx = com.ntime+com.nkappa;
+	  float orig_p0,orig_p1;
 	  float h = com.h;
 	  int sp_flag = 0; // flag set when smoothed parameters are valid
 
@@ -781,6 +782,8 @@ com.fpatt[i] /= (double)com.ls;
 			      && runif[0][i] <= (x[pidx] + h < 1 ? x[pidx] + h : 1)
 			      && runif[1][i] >= (x[pidx+1] - h > 0 ? x[pidx+1] - h : 0)
 			      && runif[1][i] <= (x[pidx+1] + h < 1 ? x[pidx+1] + h : 1) ) {
+			  orig_p0 = x[pidx];   // original p0/p1...
+			  orig_p1 = x[pidx+1]; // ...are returned to x[] below
 			  x[pidx] = runif[0][i];
 			  x[pidx+1] = runif[1][i];
 			  sp_flag = 1;
@@ -809,7 +812,9 @@ com.fpatt[i] /= (double)com.ls;
 			  printf("\nlnL0 = %12.6f\n",-lnL);
 		      }
 		      lfunNSsites_rate(frst,x,np);
-
+		      // reset p0/p1 in x[]
+		      x[pidx] = orig_p0;
+		      x[pidx+1] = orig_p1;
 		      sp_flag = 0;
 		  }
 	      }
