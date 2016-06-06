@@ -16,12 +16,12 @@ somewhere in your executable path.
 
 To use the method, ```codeml_sba``` must be run three times.
 
-###### Step 0
+#### Step 0
 First, a number of bootstrap samples must be generated from a sequence
 alignment.  To do this, run ```codeml_sba``` with ```bootstrap = N``` in the
 control file, where ```N``` is the number of bootstrap samples to generate.
 
-###### Step 1
+#### Step 1
 Next, parameters must be estimated for each of the bootstrap samples.  To do
 this, run ```codeml_sba``` with ```sba = 1``` and ```ndata = N``` in the control
 file.  The ````seqfile```` entry in the control file must be set to a file
@@ -29,7 +29,7 @@ containing the boostrap sequence alignments, which, by default is
 ```boot.txt```.  Don't forget to comment out the ```bootstrap = N``` line that
 was set in the previous step.
 
-###### Step 2
+#### Step 2
 Finally, the p-parameters of the omega distribution must be smoothed and
 posterior probabilities for each set of parameters must be calculated using the
 original sequence alignment, so ````seqfile```` must again point to same file
