@@ -1,9 +1,8 @@
 #Smoothed Bootstrap Aggregation (SBA)
 
-SBA is a method that uses bootstrapping of site patterns and borrows kernel
-smoothing techniques from machine learning to account for errors in maximum
-likelihood parameter estimates in codeml [1].  It is currently working with
-codon models M2a, branch-site A, and M8.
+SBA is a method that uses bootstrapping of site patterns and kernel smoothing to
+account for errors in maximum likelihood parameter estimates in codeml [1].  It
+is currently working with codon models M2a, branch-site A, and M8.
 
 #Installation
 
