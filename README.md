@@ -46,13 +46,14 @@ the SBA parameters in the current step and comment those in the other steps.
 
       * step 1
       seqfile   = boot.txt  * contains boostrap sequence alignemnts
-      ndata     = N         * parameters for each of N boostrap alignments
-      sba       = 1         * parameters for bootstrap alignments
+      ndata     = N         * N bootstrap alignments
+      sba       = 1         * estimate parameters for each bootstrap alignment
 
       * step 2
       seqfile   = input.seq * contains sequence alignment
-      sba       = 2         * smooth and calculate posterior probabilities
       h         = 0.4       * smoothing bandwidth parameter (0 <= h <= 1)
+      sba       = 2         * smooth and calculate posterior probabilities
+
 
 The output file ```sba_ps.csv``` will be created (or
 ```sba_foreground_branches_ps.csv``` if you are running a branch-site model) .
@@ -60,7 +61,7 @@ Each row of this file contains the site posterior probabilities for positive
 selection associated with one set of model parameters [2].  Column ```i``` of
 the file contains the posterior probabilities for site ```i``` over all sets of
 model parameters.  Inferences should be based on the average posterior
-probabilitie for a site, i.e., inference for site ```i```, should be based on
+probabilities for a site, i.e., inference for site ```i```, should be based on
 the average of column ```i```.  In column ```i+1``` the associated ω estimate is
 printed.
 
