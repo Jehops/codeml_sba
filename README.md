@@ -60,10 +60,9 @@ The output file ```sba_ps.csv``` will be created (or
 Each row of this file contains the site posterior probabilities for positive
 selection associated with one set of model parameters [2].  Column ```i``` of
 the file contains the posterior probabilities for site ```i``` over all sets of
-model parameters.  Inferences should be based on the average posterior
-probabilities for a site, i.e., inference for site ```i```, should be based on
-the average of column ```i```.  In column ```i+1``` the associated ω estimate is
-printed.
+model parameters.  Site inference should be based on the average posterior
+probability for a site, i.e., inference for site ```i```, should be based on
+the average of column ```i```.
 
 [1] Yang, Ziheng. "PAML 4: phylogenetic analysis by maximum
 likelihood." Molecular biology and evolution 24.8 (2007): 1586-1591.
