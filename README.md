@@ -34,7 +34,7 @@ posterior probabilities for each set of parameters must be calculated using the
 original sequence alignment, so ````seqfile```` must again point to same file
 from step 0.  The amount of smoothing is controlled by a kernel bandwidth
 parameter.  Specify this value with ```h = x``` in the control file, where
-```x``` is a values between 0 and 1.  For this final stage, ```sba = 2``` must
+```x``` is a value between 0 and 1.  For this final stage, ```sba = 2``` must
 also be present in the control file.
 
 Below are the relevant parameters for SBA in the control file.  Only activate
@@ -56,7 +56,7 @@ the SBA parameters in the current step and comment those in the other steps.
 
 
 The output file ```sba_ps.csv``` will be created (or
-```sba_foreground_branches_ps.csv``` if you are running a branch-site model) .
+```sba_foreground_branches_ps.csv``` if you are running a branch-site model).
 Each row of this file contains the site posterior probabilities for positive
 selection associated with one set of model parameters [2].  Column ```i``` of
 the file contains the posterior probabilities for site ```i``` over all sets of
